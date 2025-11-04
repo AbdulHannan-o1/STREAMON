@@ -133,6 +133,18 @@ export async function onboard (req, res) {
             return res.status(404).json({message:"user not found"})
         }
 
+        try {
+            await upsertStreamUser({
+            id: updatedUser._id.toString(),
+            name: updatedUser.fullName,
+            Image: updatedUser.profilePic || ""
+        })
+            console.log(`Stram User updated after onboarding for ${updatedUser.fullName}`)
+        } catch (streamError) {
+            console.log("Error updating stream user after onboarding", streamError.message)
+        }
+    
+
         res.status(200).json({success:true, user: updatedUser})
     } catch (error) {
         console.log("Error onboarding user", error)
