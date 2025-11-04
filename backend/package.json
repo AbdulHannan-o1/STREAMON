@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "dev" : "nodemon src/server.js"
+    "dev": "nodemon src/server.js"
   },
   "author": "Abdul Hannan",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
-    "stream-chat": "^8.60.0"
+    "stream-chat": "^9.25.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

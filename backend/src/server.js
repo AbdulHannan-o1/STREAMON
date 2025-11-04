@@ -1,16 +1,20 @@
 import express from "express";
 import dotenv from "dotenv";
+import authroute from "./routes/auth.route.js"
+import { ConnectDB } from "./lib/db.js";
+import cookieParser from "cookie-parser"
 
 dotenv.config();
 
 const app = express();
 const port  = process.env.PORT
 
+app.use(express.json())
+app.use(cookieParser())
 
-app.get("/", (req, res) => {
-    res.send("hello world")
-})
+app.use("/api/auth", authroute)
 
 app.listen(port, ()=> {
     console.log(`server is running on ${port}`)
+    ConnectDB()
 })
