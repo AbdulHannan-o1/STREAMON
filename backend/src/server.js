@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { ConnectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser"
+import cors from "cors";
 
 dotenv.config();
 
@@ -12,6 +13,11 @@ import chatRoute from "./routes/chat.route.js"
 
 const app = express();
 const port  = process.env.PORT
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true, // allowing to accept cookies from frontend
+}))
 
 app.use(express.json())
 app.use(cookieParser())
