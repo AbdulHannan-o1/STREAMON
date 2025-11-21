@@ -12,8 +12,11 @@ import NotificationPage from "./pages/NotificationPage.jsx";
 
 import PageLoader from "./components/PageLoader.jsx";
 import useAuthUser from "./hooks/useAuthUser.js";
+import  Layout from "./components/Layout.jsx";
+import { useThemeStore } from "./store/useThemeStore.js";
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
+  const {theme} = useThemeStore()
 
   const isAuthenticated = Boolean(authUser);
   const isOnboarded = authUser?.isOnboarded;
@@ -23,13 +26,16 @@ const App = () => {
   }
 
   return (
-    <div className="h-screen text-white" data-theme="night">
+    <div className="h-screen text-white" data-theme={theme}>
       <Routes>
         <Route
           path="/"
           element={
             isAuthenticated && isOnboarded ? (
-              <HomePage />
+              <Layout showSidebar={true}>
+                <HomePage />
+              </Layout>
+
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
@@ -78,7 +84,7 @@ const App = () => {
           element={isAuthenticated ? <ChatPage /> : <Navigate to="/login" />}
         />
         <Route
-          path="/notification"
+          path="/notifications"
           element={
             isAuthenticated ? <NotificationPage /> : <Navigate to="/login" />
           }
