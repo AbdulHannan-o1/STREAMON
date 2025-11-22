@@ -9,8 +9,8 @@ try {
     const getRecommandedUsers = await User.find({
         $and: [
             {_id: {$ne: currentUserId}},
-            {$id: {$nin: currentUser.friends}},
-            {isOnBoarded: true}
+            {_id: {$nin: currentUser.friends}},
+            {isOnboarded: true}
         ]
     })
     res.status(200).json(getRecommandedUsers)
