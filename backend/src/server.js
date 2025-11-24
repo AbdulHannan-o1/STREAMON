@@ -16,10 +16,24 @@ const app = express();
 const port  = process.env.PORT
 const __dirname = path.resolve();
 
+const allowedOrigins = [
+    process.env.FRONTEND_URL, // production frontend
+    "http://localhost:5173"   // local dev
+]
+
+
 app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true, // allowing to accept cookies from frontend
-}))
+    origin: (origin, callback) => {
+        // allow requests with no origin (like Postman) or from allowedOrigins
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true,
+}));
+
 
 app.use(express.json())
 app.use(cookieParser())
