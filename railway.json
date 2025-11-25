@@ -1,0 +1,10 @@
+{
+  "services": [
+    {
+      "name": "backend",
+      "rootDirectory": "backend",
+      "startCommand": "npm start",
+      "buildCommand": "npm install"
+    }
+  ]
+}

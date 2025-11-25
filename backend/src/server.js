@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { ConnectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser"
 import cors from "cors";
+import path from "path";
 
 dotenv.config();
 
@@ -13,11 +14,26 @@ import chatRoute from "./routes/chat.route.js"
 
 const app = express();
 const port  = process.env.PORT
+const __dirname = path.resolve();
+
+const allowedOrigins = [
+    process.env.FRONTEND_URL, // production frontend
+    "http://localhost:5173"   // local dev
+]
+
 
 app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true, // allowing to accept cookies from frontend
-}))
+    origin: (origin, callback) => {
+        // allow requests with no origin (like Postman) or from allowedOrigins
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true,
+}));
+
 
 app.use(express.json())
 app.use(cookieParser())
@@ -25,6 +41,14 @@ app.use(cookieParser())
 app.use("/api/auth", authRoute)
 app.use("/api/users", userRoute)
 app.use("/api/chat", chatRoute)
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, "../frontend/dist")))
+
+    app.get("*", (req, res)=> {
+        res.sendFile(path.join(__dirname, "../frontend/dist/index.html"))
+    })
+}
 
 
 app.listen(port, ()=> {

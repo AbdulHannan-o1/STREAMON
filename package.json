@@ -1,0 +1,20 @@
+{
+  "name": "streamon",
+  "version": "1.0.0",
+  "description": "A live Chat App with video calling ",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix frontend && npm run build --prefix frontend",
+    "outputDirectory": "frontend/dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbdulHannan-o1/STREAMON.git"
+  },
+  "author": "Abdul Hannan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbdulHannan-o1/STREAMON/issues"
+  },
+  "homepage": "https://github.com/AbdulHannan-o1/STREAMON#readme"
+}
